@@ -15,7 +15,7 @@ on:
   workflow_dispatch:
     inputs:
       ssh:
-        description: 'RUN'
+        description: 'ssh po'
         required: true
         default: 'false'
 #  schedule:
