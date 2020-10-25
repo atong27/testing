@@ -15,7 +15,7 @@ on:
   workflow_dispatch:
     inputs:
       ssh:
-        description: 'ssh po'
+        description: 'SSH connection to Actions'
         required: true
         default: 'false'
 #  schedule:
