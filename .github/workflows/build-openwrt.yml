@@ -60,9 +60,10 @@ jobs:
       working-directory: /workdir
       run: |
         df -hT $PWD
-        curl -L $REPO_URL
+        curl -L $REPO_URL -o openwrt-sdk-19.07.4-ramips-mt7621_gcc-7.5.0_musl.Linux-x86_64.tar.xz
         tar -xf openwrt-sdk-19.07.4-ramips-mt7621_gcc-7.5.0_musl.Linux-x86_64.tar.xz
         mv openwrt-sdk-19.07.4-ramips-mt7621_gcc-7.5.0_musl.Linux-x86_64 openwrt
+        ln -sf /workdir/openwrt $GITHUB_WORKSPACE/openwrt
 
     - name: Load custom feeds
       run: |
