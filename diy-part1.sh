@@ -18,3 +18,5 @@
 
 git clone https://github.com/mwarning/openwrt-examples
 cp -rf openwrt-examples/example1 package
+cp -rf openwrt-examples/example3 package
+cp -rf openwrt-examples/example2 package
