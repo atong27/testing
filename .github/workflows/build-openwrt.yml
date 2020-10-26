@@ -26,8 +26,8 @@ env:
   REPO_BRANCH: openwrt-19.07
   FEEDS_CONF: feeds.conf.default
   CONFIG_FILE: .config
-  DIY_P1_SH: diy-part1.sh
-  DIY_P2_SH: diy-part2.sh
+  DIY_P1_SH: custom1.sh
+  DIY_P2_SH: custom2.sh
   UPLOAD_BIN_DIR: true
   UPLOAD_FIRMWARE: false
   UPLOAD_COWTRANSFER: true
@@ -146,7 +146,7 @@ jobs:
       if: steps.organize.outputs.status == 'success' && env.UPLOAD_COWTRANSFER == 'true' && !cancelled()
       run: |
         curl -fsSL git.io/file-transfer | sh
-        ./transfer cow --block 2621440 -s -p 64 --no-progress ${FIRMWARE} 2>&1 | tee cowtransfer.log
+        ./transfer cow --block 2621440 -s -p 64 --no-progress ${FILE_DATE} 2>&1 | tee cowtransfer.log
         echo "::warning file=cowtransfer.com::$(cat cowtransfer.log | grep https)"
         echo "::set-output name=url::$(cat cowtransfer.log | grep https | cut -f3 -d" ")"
 
@@ -155,7 +155,7 @@ jobs:
       if: steps.organize.outputs.status == 'success' && env.UPLOAD_WETRANSFER == 'true' && !cancelled()
       run: |
         curl -fsSL git.io/file-transfer | sh
-        ./transfer wet -s -p 16 --no-progress ${FIRMWARE} 2>&1 | tee wetransfer.log
+        ./transfer wet -s -p 16 --no-progress ${FILE_DATE} 2>&1 | tee wetransfer.log
         echo "::warning file=wetransfer.com::$(cat wetransfer.log | grep https)"
         echo "::set-output name=url::$(cat wetransfer.log | grep https | cut -f3 -d" ")"
 
@@ -177,7 +177,7 @@ jobs:
       with:
         tag_name: ${{ steps.tag.outputs.release_tag }}
         body_path: release.txt
-        files: ${{ env.FIRMWARE }}/*
+        files: ${{ env.FILE_DATE }}/*
 
     - name: Remove old Artifacts
       uses: c-hive/gha-remove-artifacts@v1.2.0
